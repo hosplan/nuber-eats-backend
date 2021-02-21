@@ -11,26 +11,39 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Restaurant = void 0;
 const graphql_1 = require("@nestjs/graphql");
+const class_validator_1 = require("class-validator");
+const typeorm_1 = require("typeorm");
 let Restaurant = class Restaurant {
 };
 __decorate([
+    typeorm_1.PrimaryGeneratedColumn(),
+    graphql_1.Field(type => Number),
+    __metadata("design:type", Number)
+], Restaurant.prototype, "id", void 0);
+__decorate([
     graphql_1.Field(is => String),
+    typeorm_1.Column(),
+    class_validator_1.IsString(),
+    class_validator_1.Length(5),
     __metadata("design:type", String)
 ], Restaurant.prototype, "name", void 0);
 __decorate([
-    graphql_1.Field(type => Boolean, { nullable: true }),
+    graphql_1.Field(type => Boolean, { nullable: true, defaultValue: true }),
+    typeorm_1.Column({ default: true }),
+    class_validator_1.IsOptional(),
+    class_validator_1.IsBoolean(),
     __metadata("design:type", Boolean)
 ], Restaurant.prototype, "isVegan", void 0);
 __decorate([
-    graphql_1.Field(type => String),
+    graphql_1.Field(type => String, { defaultValue: 'adadadadad' }),
+    typeorm_1.Column(),
+    class_validator_1.IsString(),
     __metadata("design:type", String)
 ], Restaurant.prototype, "address", void 0);
-__decorate([
-    graphql_1.Field(type => String),
-    __metadata("design:type", String)
-], Restaurant.prototype, "ownerName", void 0);
 Restaurant = __decorate([
-    graphql_1.ObjectType()
+    graphql_1.InputType({ isAbstract: true }),
+    graphql_1.ObjectType(),
+    typeorm_1.Entity()
 ], Restaurant);
 exports.Restaurant = Restaurant;
 //# sourceMappingURL=restaurant.entity.js.map

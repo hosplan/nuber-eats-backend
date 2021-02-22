@@ -12,8 +12,8 @@ const Joi = require("joi");
 const config_1 = require("@nestjs/config");
 const graphql_1 = require("@nestjs/graphql");
 const typeorm_1 = require("@nestjs/typeorm");
-const restaurants_module_1 = require("./restaurants/restaurants.module");
-const restaurant_entity_1 = require("./restaurants/entities/restaurant.entity");
+const users_module_1 = require("./users/users.module");
+const user_entity_1 = require("./users/entities/user.entity");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -35,7 +35,6 @@ AppModule = __decorate([
             graphql_1.GraphQLModule.forRoot({
                 autoSchemaFile: true,
             }),
-            restaurants_module_1.RestaurantsModule,
             typeorm_1.TypeOrmModule.forRoot({
                 type: "postgres",
                 host: process.env.DB_HOST,
@@ -45,8 +44,9 @@ AppModule = __decorate([
                 database: process.env.DB_NAME,
                 synchronize: process.env.NODE_ENV !== 'prod',
                 logging: process.env.NODE_ENV !== 'prod',
-                entities: [restaurant_entity_1.Restaurant]
+                entities: [user_entity_1.User],
             }),
+            users_module_1.UsersModule,
         ],
         controllers: [],
         providers: [],

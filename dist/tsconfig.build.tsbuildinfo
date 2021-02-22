@@ -6116,7 +6116,7 @@
         "affectsGlobalScope": false
       },
       "../src/restaurants/restaurants.resolver.ts": {
-        "version": "4a663a36f1bab8ba86995b70d2b59cefde3d1a0b455e809deef6f22b1b142dae",
+        "version": "d0c448ebd7abb046971149cced838e13ebffe1a8fc12b0cf00808541f2be6625",
         "signature": "064a17ebf81581d71ebb7c0f9ff211a37a3d77b981b7a43cd22d0e2f9164e682",
         "affectsGlobalScope": false
       },
@@ -6125,14 +6125,64 @@
         "signature": "2b2fa1366408d38cdaf4f7af8d828eaa058a4a55f18e94781255ca2a623e1863",
         "affectsGlobalScope": false
       },
+      "../src/common/entities/core.entity.ts": {
+        "version": "464bd68d7c7eb01bae93cc2a6732cb3b11e4e1abee2c27a856611dcde3e6b447",
+        "signature": "be9c6a6433444bfa31113a4d6e853f73d6ee50c386f8078b66719156bc073769",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/@types/bcrypt/index.d.ts": {
+        "version": "18b9a9702d2fc7d3766b0c8124133c761ad25a9d767925005777eb2c2cd8aeba",
+        "signature": "18b9a9702d2fc7d3766b0c8124133c761ad25a9d767925005777eb2c2cd8aeba",
+        "affectsGlobalScope": false
+      },
+      "../src/users/entities/user.entity.ts": {
+        "version": "ed7ab688d57ac074eaeac8e84e0abaface98852096245d494083bb6ae4a9a4d1",
+        "signature": "d666cd4749fec51062872b7ee74a56624487c10024b02255a37188ac57446b06",
+        "affectsGlobalScope": false
+      },
+      "../src/common/dtos/output.dto.ts": {
+        "version": "c18004780ab0a301a0aeae417d0aaec244f60d2e2a85984d59a1818681f62812",
+        "signature": "63fd1d9549b52e2875f97511cef086fd4dd1ba05d3090458fdf0f9a7636c304a",
+        "affectsGlobalScope": false
+      },
+      "../src/users/dtos/create-account.dto.ts": {
+        "version": "d4f707cc60800460343edd08a4d2cb657a8ac05987d641aabe85c461d53f1d86",
+        "signature": "ac877c443d726682f2546a82f1d571f17af98065c67f887b8361c69ab5efee9c",
+        "affectsGlobalScope": false
+      },
+      "../src/users/dtos/login-dto.ts": {
+        "version": "0027de66983af5de1976cee49a83ce7ce2eb68ad17bc0b09a45de498cd59f806",
+        "signature": "3cdeabd30f6f61821cf6705d9da1265b80f30ba8d7b7179e400241665d5791f1",
+        "affectsGlobalScope": false
+      },
+      "../src/users/users.service.ts": {
+        "version": "a4ec26cbcde98201d0c9073f52f901dd56744f70ed67bfacf91066089ea48e71",
+        "signature": "5e2f1100dc4193d2fbe3420172356a6ac5a703199a77ebb8396be12a7e5b9d55",
+        "affectsGlobalScope": false
+      },
+      "../src/users/users.resolver.ts": {
+        "version": "fb26e3844c4eacb82787fa3a7bb19bb9b94c9f8475ecd8c097065ff125ca04b9",
+        "signature": "fca24275ef5fc31a950542c270919916241b4bae7a2dfb3c01d813a435ce0fde",
+        "affectsGlobalScope": false
+      },
+      "../src/users/users.module.ts": {
+        "version": "74c488eab2e60dc918f70ac879934a3f3c4b22a68d043e20bba1fdbd4907c6ad",
+        "signature": "12dec6c99bd8d11167fa91a31e737abbbf8c9cc789c151a25a9a1d13f328175c",
+        "affectsGlobalScope": false
+      },
       "../src/app.module.ts": {
-        "version": "239d9c0e64825ce4ffdde4667c380453d332202021d4b6f9032ff75bceefc545",
+        "version": "6e8d5e4a9657befaeb74aba7f04bb3e9987fbe84e833cafaa9be0421524c8275",
         "signature": "9fc7f7b6ad854404973b8cba8e6d883f758237991968e9a3965d716d46f1da88",
         "affectsGlobalScope": false
       },
       "../src/main.ts": {
         "version": "c8a6b066a247042ac853ab45f23dc3c704d344d65f93b1562c5e53ee3fd7369c",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
+        "affectsGlobalScope": false
+      },
+      "../src/common/common.module.ts": {
+        "version": "cbc3a605c697a595bfa4e6cd27096a68fb848317ae05f8fc4dbec4c77841a011",
+        "signature": "904ccafb17fba4a5c3b773c40a28d0fddec714f93a74f659dc7799eb465fa50b",
         "affectsGlobalScope": false
       },
       "../node_modules/@types/anymatch/index.d.ts": {
@@ -11463,7 +11513,19 @@
         "../node_modules/@nestjs/typeorm/index.d.ts",
         "../node_modules/joi/lib/index.d.ts",
         "../src/restaurants/entities/restaurant.entity.ts",
-        "../src/restaurants/restaurants.module.ts"
+        "../src/restaurants/restaurants.module.ts",
+        "../src/users/entities/user.entity.ts",
+        "../src/users/users.module.ts"
+      ],
+      "../src/common/common.module.ts": [
+        "../node_modules/@nestjs/common/index.d.ts"
+      ],
+      "../src/common/dtos/output.dto.ts": [
+        "../node_modules/@nestjs/graphql/index.d.ts"
+      ],
+      "../src/common/entities/core.entity.ts": [
+        "../node_modules/@nestjs/graphql/index.d.ts",
+        "../node_modules/typeorm/index.d.ts"
       ],
       "../src/main.ts": [
         "../node_modules/@nestjs/common/index.d.ts",
@@ -11506,6 +11568,46 @@
         "../src/restaurants/dtos/update-restaurant.dto.ts",
         "../src/restaurants/entities/restaurant.entity.ts",
         "../src/restaurants/entities/restaurants.service.ts"
+      ],
+      "../src/users/dtos/create-account.dto.ts": [
+        "../node_modules/@nestjs/graphql/index.d.ts",
+        "../src/common/dtos/output.dto.ts",
+        "../src/users/entities/user.entity.ts"
+      ],
+      "../src/users/dtos/login-dto.ts": [
+        "../node_modules/@nestjs/graphql/index.d.ts",
+        "../src/common/dtos/output.dto.ts",
+        "../src/users/entities/user.entity.ts"
+      ],
+      "../src/users/entities/user.entity.ts": [
+        "../node_modules/@nestjs/common/index.d.ts",
+        "../node_modules/@nestjs/graphql/index.d.ts",
+        "../node_modules/@types/bcrypt/index.d.ts",
+        "../node_modules/class-validator/types/index.d.ts",
+        "../node_modules/typeorm/index.d.ts",
+        "../src/common/entities/core.entity.ts"
+      ],
+      "../src/users/users.module.ts": [
+        "../node_modules/@nestjs/common/index.d.ts",
+        "../node_modules/@nestjs/typeorm/index.d.ts",
+        "../src/users/entities/user.entity.ts",
+        "../src/users/users.resolver.ts",
+        "../src/users/users.service.ts"
+      ],
+      "../src/users/users.resolver.ts": [
+        "../node_modules/@nestjs/graphql/index.d.ts",
+        "../src/users/dtos/create-account.dto.ts",
+        "../src/users/dtos/login-dto.ts",
+        "../src/users/entities/user.entity.ts",
+        "../src/users/users.service.ts"
+      ],
+      "../src/users/users.service.ts": [
+        "../node_modules/@nestjs/common/index.d.ts",
+        "../node_modules/@nestjs/typeorm/index.d.ts",
+        "../node_modules/typeorm/index.d.ts",
+        "../src/users/dtos/create-account.dto.ts",
+        "../src/users/dtos/login-dto.ts",
+        "../src/users/entities/user.entity.ts"
       ]
     },
     "exportedModulesMap": {
@@ -16535,6 +16637,30 @@
         "../src/restaurants/dtos/update-restaurant.dto.ts",
         "../src/restaurants/entities/restaurant.entity.ts",
         "../src/restaurants/entities/restaurants.service.ts"
+      ],
+      "../src/users/dtos/create-account.dto.ts": [
+        "../node_modules/@nestjs/common/index.d.ts",
+        "../src/common/dtos/output.dto.ts",
+        "../src/users/entities/user.entity.ts"
+      ],
+      "../src/users/dtos/login-dto.ts": [
+        "../node_modules/@nestjs/common/index.d.ts",
+        "../src/common/dtos/output.dto.ts",
+        "../src/users/entities/user.entity.ts"
+      ],
+      "../src/users/entities/user.entity.ts": [
+        "../src/common/entities/core.entity.ts"
+      ],
+      "../src/users/users.resolver.ts": [
+        "../src/users/dtos/create-account.dto.ts",
+        "../src/users/dtos/login-dto.ts",
+        "../src/users/users.service.ts"
+      ],
+      "../src/users/users.service.ts": [
+        "../node_modules/typeorm/index.d.ts",
+        "../src/users/dtos/create-account.dto.ts",
+        "../src/users/dtos/login-dto.ts",
+        "../src/users/entities/user.entity.ts"
       ]
     },
     "semanticDiagnosticsPerFile": [
@@ -16913,6 +17039,7 @@
       "../node_modules/@types/babel__generator/index.d.ts",
       "../node_modules/@types/babel__template/index.d.ts",
       "../node_modules/@types/babel__traverse/index.d.ts",
+      "../node_modules/@types/bcrypt/index.d.ts",
       "../node_modules/@types/body-parser/index.d.ts",
       "../node_modules/@types/connect/index.d.ts",
       "../node_modules/@types/content-disposition/index.d.ts",
@@ -17817,13 +17944,22 @@
       "../node_modules/zen-observable-ts/lib/types.d.ts",
       "../node_modules/zen-observable-ts/lib/zenobservable.d.ts",
       "../src/app.module.ts",
+      "../src/common/common.module.ts",
+      "../src/common/dtos/output.dto.ts",
+      "../src/common/entities/core.entity.ts",
       "../src/main.ts",
       "../src/restaurants/dtos/create-restaurant.dto.ts",
       "../src/restaurants/dtos/update-restaurant.dto.ts",
       "../src/restaurants/entities/restaurant.entity.ts",
       "../src/restaurants/entities/restaurants.service.ts",
       "../src/restaurants/restaurants.module.ts",
-      "../src/restaurants/restaurants.resolver.ts"
+      "../src/restaurants/restaurants.resolver.ts",
+      "../src/users/dtos/create-account.dto.ts",
+      "../src/users/dtos/login-dto.ts",
+      "../src/users/entities/user.entity.ts",
+      "../src/users/users.module.ts",
+      "../src/users/users.resolver.ts",
+      "../src/users/users.service.ts"
     ]
   },
   "version": "4.1.5"

@@ -5,6 +5,8 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RestaurantsModule } from './restaurants/restaurants.module';
 import { Restaurant } from './restaurants/entities/restaurant.entity';
+import { UsersModule } from './users/users.module';
+import { User } from './users/entities/user.entity';
 
 @Module({
   imports: [
@@ -24,7 +26,6 @@ import { Restaurant } from './restaurants/entities/restaurant.entity';
     GraphQLModule.forRoot({
       autoSchemaFile:true, //기본적으로 스키마 파일을 만들어 낸다. 내가 직접적으로 파일을 가지고 있지 않아도 된다.
     }),
-    RestaurantsModule,
     TypeOrmModule.forRoot({
       type: "postgres",
       host: process.env.DB_HOST,
@@ -35,8 +36,9 @@ import { Restaurant } from './restaurants/entities/restaurant.entity';
       //synchronize: process.env.NODE_ENV === 'prod',
       synchronize: process.env.NODE_ENV !== 'prod',
       logging: process.env.NODE_ENV !== 'prod',
-      entities : [Restaurant]
+      entities : [User],
     }),
+    UsersModule,
   ],
   controllers: [],
   providers: [],

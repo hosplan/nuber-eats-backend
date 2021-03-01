@@ -19,7 +19,7 @@ LoginInput = __decorate([
     graphql_1.InputType()
 ], LoginInput);
 exports.LoginInput = LoginInput;
-let LoginOutput = class LoginOutput extends output_dto_1.MutationOutPut {
+let LoginOutput = class LoginOutput extends output_dto_1.CoreOutput {
 };
 __decorate([
     graphql_1.Field(type => String, { nullable: true }),

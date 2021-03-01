@@ -10,6 +10,9 @@ import { User } from './users/entities/user.entity';
 import { JwtModule } from './jwt/jwt.module';
 import { CommonModule } from './common/common.module';
 import { JwtMiddleware } from './jwt/jwt.middleware';
+import { AuthModule } from './auth/auth.module';
+import { Verification } from './users/entities/verification.entity';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -25,10 +28,14 @@ import { JwtMiddleware } from './jwt/jwt.middleware';
         DB_PASSWORD:Joi.string().required(),
         DB_NAME:Joi.string().required(),
         PRIVATE_KEY:Joi.string().required(),
+        MAILGUN_API_KEY:Joi.string().required(),
+        MAILGUN_DOMAIN_NAME:Joi.string().required(),
+        MAILGUN_FROM_EMAIL:Joi.string().required(),
       })
     }),
     GraphQLModule.forRoot({
       autoSchemaFile:true, //기본적으로 스키마 파일을 만들어 낸다. 내가 직접적으로 파일을 가지고 있지 않아도 된다.
+      context: ({req}) => ({user:req['user']}),
     }),
     TypeOrmModule.forRoot({
       type: "postgres",
@@ -40,13 +47,18 @@ import { JwtMiddleware } from './jwt/jwt.middleware';
       //synchronize: process.env.NODE_ENV === 'prod',
       synchronize: process.env.NODE_ENV !== 'prod',
       logging: process.env.NODE_ENV !== 'prod',
-      entities : [User],
+      entities : [User, Verification],
     }),
     UsersModule,
-    CommonModule,
     JwtModule.forRoot({
       privateKey:process.env.PRIVATE_KEY,
-    }), 
+    }),
+    MailModule.forRoot({
+      apiKey:process.env.MAILGUN_API_KEY,
+      domain:process.env.MAILGUN_DOMAIN_NAME,
+      fromEmail:process.env.MAILGUN_FROM_EMAIL,     
+    }),
+
   ],
   controllers: [],
   providers: [],

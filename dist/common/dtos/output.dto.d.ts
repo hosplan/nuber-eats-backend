@@ -1,4 +1,4 @@
-export declare class MutationOutPut {
+export declare class CoreOutput {
     error?: string;
     ok: boolean;
 }

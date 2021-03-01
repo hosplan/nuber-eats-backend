@@ -25,16 +25,21 @@ var UserRole;
 graphql_1.registerEnumType(UserRole, { name: 'UserRole' });
 let User = class User extends core_entity_1.CoreEntity {
     async hashPassword() {
-        try {
-            this.password = await bcrypt.hash(this.password, 10);
-        }
-        catch (e) {
-            console.log(e);
-            throw new common_1.InternalServerErrorException();
+        if (this.password) {
+            try {
+                this.password = await bcrypt.hash(this.password, 10);
+            }
+            catch (e) {
+                console.log(e);
+                throw new common_1.InternalServerErrorException();
+            }
         }
     }
     async checkPassword(aPassword) {
         try {
+            console.log("DB에 저장된 이메일 " + this.email);
+            console.log("DB에 저장된 비밀번호 " + this.password);
+            console.log("내가 입력한 비밀번호 " + aPassword);
             const ok = await bcrypt.compare(aPassword, this.password);
             return ok;
         }
@@ -51,7 +56,7 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "email", void 0);
 __decorate([
-    typeorm_1.Column(),
+    typeorm_1.Column({ select: false }),
     graphql_1.Field(type => String),
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
@@ -62,7 +67,13 @@ __decorate([
     __metadata("design:type", Number)
 ], User.prototype, "role", void 0);
 __decorate([
+    typeorm_1.Column({ default: false }),
+    graphql_1.Field(type => Boolean),
+    __metadata("design:type", Boolean)
+], User.prototype, "verified", void 0);
+__decorate([
     typeorm_1.BeforeInsert(),
+    typeorm_1.BeforeUpdate(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)

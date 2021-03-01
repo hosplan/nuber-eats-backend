@@ -18,10 +18,14 @@ const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const user_entity_1 = require("./entities/user.entity");
 const jwt_service_1 = require("../jwt/jwt.service");
+const verification_entity_1 = require("./entities/verification.entity");
+const mail_service_1 = require("../mail/mail.service");
 let UsersService = class UsersService {
-    constructor(users, jwtService) {
+    constructor(users, verifications, jwtService, mailService) {
         this.users = users;
+        this.verifications = verifications;
         this.jwtService = jwtService;
+        this.mailService = mailService;
         this.jwtService.hello();
     }
     async createAccount({ email, password, role }) {
@@ -30,7 +34,15 @@ let UsersService = class UsersService {
             if (exists) {
                 return { ok: false, error: 'There is a user with that email already' };
             }
-            await this.users.save(this.users.create({ email, password, role }));
+            const user = await this.users.save(this.users.create({
+                email,
+                password,
+                role
+            }));
+            const verification = await this.verifications.save(this.verifications.create({
+                user,
+            }));
+            this.mailService.sendVerificationEmail(user.email, verification.code);
             return { ok: true };
         }
         catch (e) {
@@ -39,7 +51,7 @@ let UsersService = class UsersService {
     }
     async login({ email, password }) {
         try {
-            const user = await this.users.findOne({ email });
+            const user = await this.users.findOne({ email }, { select: ['password', 'email', 'id'] });
             if (!user) {
                 return {
                     ok: false,
@@ -53,6 +65,7 @@ let UsersService = class UsersService {
                     error: "Wrong password",
                 };
             }
+            console.log(user);
             const token = this.jwtService.sign(user.id);
             return {
                 ok: true,
@@ -69,12 +82,44 @@ let UsersService = class UsersService {
     async findById(id) {
         return this.users.findOne({ id });
     }
+    async editProfile(userId, { email, password }) {
+        const user = await this.users.findOne(userId);
+        if (email) {
+            user.email = email;
+            user.verified = false;
+            const verification = await this.verifications.save(this.verifications.create({ user }));
+            this.mailService.sendVerificationEmail(user.email, verification.code);
+        }
+        if (password) {
+            user.password = password;
+        }
+        return this.users.save(user);
+    }
+    async verifyEmail(code) {
+        try {
+            const verification = await this.verifications.findOne({ code }, { relations: ['user'] });
+            if (verification) {
+                verification.user.verified = true;
+                await this.users.save(verification.user);
+                await this.verifications.delete(verification.id);
+                return true;
+            }
+            throw new Error();
+        }
+        catch (e) {
+            console.log(e);
+            return false;
+        }
+    }
 };
 UsersService = __decorate([
     common_1.Injectable(),
     __param(0, typeorm_1.InjectRepository(user_entity_1.User)),
+    __param(1, typeorm_1.InjectRepository(verification_entity_1.Verification)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
-        jwt_service_1.JwtService])
+        typeorm_2.Repository,
+        jwt_service_1.JwtService,
+        mail_service_1.MailService])
 ], UsersService);
 exports.UsersService = UsersService;
 //# sourceMappingURL=users.service.js.map

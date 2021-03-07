@@ -64,7 +64,6 @@ export class UsersResolver{
             }
             return{
                 ok:true,
-                user,
             };
         }
         catch(e){

@@ -9,15 +9,11 @@ export class JwtService {
     constructor(
         @Inject(CONFIG_OPTIONS) private readonly options:JwtModuleOptions
     ) {
-        console.log(options);
+        //console.log(options);
     }
     sign(userId:number):string{
         return jwt.sign(
             {id:userId}, this.options.privateKey);
-    }
-
-    hello(){
-        console.log('hello');
     }
 
     verify(token:string){

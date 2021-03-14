@@ -19,13 +19,9 @@ const common_constants_1 = require("../common/common.constants");
 let JwtService = class JwtService {
     constructor(options) {
         this.options = options;
-        console.log(options);
     }
     sign(userId) {
         return jwt.sign({ id: userId }, this.options.privateKey);
-    }
-    hello() {
-        console.log('hello');
     }
     verify(token) {
         return jwt.verify(token, this.options.privateKey);

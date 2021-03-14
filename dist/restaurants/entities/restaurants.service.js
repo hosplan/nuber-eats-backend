@@ -15,27 +15,44 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.RestaurantService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
+const user_entity_1 = require("../../users/entities/user.entity");
 const typeorm_2 = require("typeorm");
+const category_entity_1 = require("./category.entity");
 const restaurant_entity_1 = require("./restaurant.entity");
 let RestaurantService = class RestaurantService {
-    constructor(restaurants) {
+    constructor(restaurants, categories) {
         this.restaurants = restaurants;
+        this.categories = categories;
     }
-    getAll() {
-        return this.restaurants.find();
-    }
-    createRestaurant(createRestaurantDto) {
-        const newRestaurant = this.restaurants.create(createRestaurantDto);
-        return this.restaurants.save(newRestaurant);
-    }
-    updateRestaurant({ id, data }) {
-        return this.restaurants.update(id, Object.assign({}, data));
+    async createRestaurant(owner, createRestaurantInput) {
+        try {
+            const newRestaurant = this.restaurants.create(createRestaurantInput);
+            newRestaurant.owner = owner;
+            const categoryName = createRestaurantInput.categoryName.trim().toLowerCase();
+            const categorySlug = categoryName.replace(/ /g, "-");
+            let category = await this.categories.findOne({ slug: categorySlug });
+            if (!category) {
+                category = await this.categories.save(this.categories.create({ slug: categorySlug, name: categoryName }));
+            }
+            await this.restaurants.save(newRestaurant);
+            return {
+                ok: true,
+            };
+        }
+        catch (error) {
+            return {
+                ok: false,
+                error: 'Could not create restaurant',
+            };
+        }
     }
 };
 RestaurantService = __decorate([
     common_1.Injectable(),
     __param(0, typeorm_1.InjectRepository(restaurant_entity_1.Restaurant)),
-    __metadata("design:paramtypes", [typeorm_2.Repository])
+    __param(1, typeorm_1.InjectRepository(category_entity_1.Category)),
+    __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository])
 ], RestaurantService);
 exports.RestaurantService = RestaurantService;
 //# sourceMappingURL=restaurants.service.js.map

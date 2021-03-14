@@ -12,12 +12,16 @@ const Joi = require("joi");
 const config_1 = require("@nestjs/config");
 const graphql_1 = require("@nestjs/graphql");
 const typeorm_1 = require("@nestjs/typeorm");
+const restaurants_module_1 = require("./restaurants/restaurants.module");
+const restaurant_entity_1 = require("./restaurants/entities/restaurant.entity");
 const users_module_1 = require("./users/users.module");
 const user_entity_1 = require("./users/entities/user.entity");
 const jwt_module_1 = require("./jwt/jwt.module");
 const jwt_middleware_1 = require("./jwt/jwt.middleware");
+const auth_module_1 = require("./auth/auth.module");
 const verification_entity_1 = require("./users/entities/verification.entity");
 const mail_module_1 = require("./mail/mail.module");
+const category_entity_1 = require("./restaurants/entities/category.entity");
 let AppModule = class AppModule {
     configure(consumer) {
         consumer.apply(jwt_middleware_1.JwtMiddleware).forRoutes({
@@ -34,7 +38,7 @@ AppModule = __decorate([
                 envFilePath: process.env.NODE_ENV === 'dev' ? '.env.dev' : '.env.test',
                 ignoreEnvFile: process.env.NODE_ENV === 'prod',
                 validationSchema: Joi.object({
-                    NODE_ENV: Joi.string().valid('dev', 'prod'),
+                    NODE_ENV: Joi.string().valid('dev', 'prod', 'test'),
                     DB_HOST: Joi.string().required(),
                     DB_PORT: Joi.string().required(),
                     DB_USERNAME: Joi.string().required(),
@@ -58,8 +62,8 @@ AppModule = __decorate([
                 password: process.env.DB_PASSWORD,
                 database: process.env.DB_NAME,
                 synchronize: process.env.NODE_ENV !== 'prod',
-                logging: process.env.NODE_ENV !== 'prod',
-                entities: [user_entity_1.User, verification_entity_1.Verification],
+                logging: process.env.NODE_ENV !== 'prod' && process.env.NODE_ENV !== 'test',
+                entities: [user_entity_1.User, verification_entity_1.Verification, restaurant_entity_1.Restaurant, category_entity_1.Category],
             }),
             users_module_1.UsersModule,
             jwt_module_1.JwtModule.forRoot({
@@ -70,6 +74,9 @@ AppModule = __decorate([
                 domain: process.env.MAILGUN_DOMAIN_NAME,
                 fromEmail: process.env.MAILGUN_FROM_EMAIL,
             }),
+            auth_module_1.AuthModule,
+            users_module_1.UsersModule,
+            restaurants_module_1.RestaurantsModule,
         ],
         controllers: [],
         providers: [],

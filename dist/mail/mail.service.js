@@ -22,7 +22,6 @@ let MailService = class MailService {
         this.options = options;
     }
     async sendEmail(subject, content, to, template, emailVars) {
-        console.log(content);
         const form = new FormData();
         form.append("from", `TaeHo from NuberEats <mailgun@${this.options.domain}>`);
         form.append("to", to);
@@ -30,16 +29,16 @@ let MailService = class MailService {
         form.append("template", template);
         emailVars.forEach(eVar => form.append(`v:${eVar.key}`, eVar.value));
         try {
-            await source_1.default(`https://api.mailgun.net/v3/${this.options.domain}/messages`, {
-                method: "POST",
+            await source_1.default.post(`https://api.mailgun.net/v3/${this.options.domain}/messages`, {
                 headers: {
                     "Authorization": `Basic ${Buffer.from(`api:${this.options.apiKey}`).toString("base64")}`,
                 },
                 body: form,
             });
+            return true;
         }
         catch (error) {
-            console.log(error);
+            return false;
         }
     }
     sendVerificationEmail(email, code) {

@@ -8,7 +8,6 @@ import { VerifyEmailInput, VerifyEmailOutput } from "./dtos/verify-email.dto";
 export declare class UsersResolver {
     private readonly usersService;
     constructor(usersService: UsersService);
-    hi(): boolean;
     createAccount(createAccountInput: CreateAccountInput): Promise<CreateAccountOutput>;
     login(loginInput: LoginInput): Promise<LoginOutput>;
     me(authUser: User): User;

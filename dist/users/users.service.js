@@ -26,11 +26,11 @@ let UsersService = class UsersService {
         this.verifications = verifications;
         this.jwtService = jwtService;
         this.mailService = mailService;
-        this.jwtService.hello();
     }
     async createAccount({ email, password, role }) {
         try {
             const exists = await this.users.findOne({ email });
+            console.log(exists);
             if (exists) {
                 return { ok: false, error: 'There is a user with that email already' };
             }
@@ -80,20 +80,37 @@ let UsersService = class UsersService {
         }
     }
     async findById(id) {
-        return this.users.findOne({ id });
+        try {
+            const user = await this.users.findOneOrFail({ id });
+            return {
+                ok: true,
+                user: user,
+            };
+        }
+        catch (error) {
+            return { ok: false, error: 'User Not Found' };
+        }
     }
     async editProfile(userId, { email, password }) {
-        const user = await this.users.findOne(userId);
-        if (email) {
-            user.email = email;
-            user.verified = false;
-            const verification = await this.verifications.save(this.verifications.create({ user }));
-            this.mailService.sendVerificationEmail(user.email, verification.code);
+        try {
+            const user = await this.users.findOne(userId);
+            if (email) {
+                user.email = email;
+                user.verified = false;
+                const verification = await this.verifications.save(this.verifications.create({ user }));
+                this.mailService.sendVerificationEmail(user.email, verification.code);
+            }
+            if (password) {
+                user.password = password;
+            }
+            await this.users.save(user);
+            return {
+                ok: true,
+            };
         }
-        if (password) {
-            user.password = password;
+        catch (error) {
+            return { ok: false, error: 'fuck...' };
         }
-        return this.users.save(user);
     }
     async verifyEmail(code) {
         try {
@@ -102,13 +119,12 @@ let UsersService = class UsersService {
                 verification.user.verified = true;
                 await this.users.save(verification.user);
                 await this.verifications.delete(verification.id);
-                return true;
+                return { ok: true };
             }
-            throw new Error();
+            return { ok: false, error: 'Verification not Found.' };
         }
-        catch (e) {
-            console.log(e);
-            return false;
+        catch (error) {
+            return { ok: false, error: "Could not verify email" };
         }
     }
 };

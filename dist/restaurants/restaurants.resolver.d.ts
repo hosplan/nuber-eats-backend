@@ -1,11 +1,8 @@
-import { CreateRestaurantDto } from "./dtos/create-restaurant.dto";
-import { UpdateRestarantDto } from "./dtos/update-restaurant.dto";
-import { Restaurant } from "./entities/restaurant.entity";
+import { User } from "src/users/entities/user.entity";
+import { CreateRestaurantInput, CreateRestaurantOutput } from "./dtos/create-restaurant.dto";
 import { RestaurantService } from "./entities/restaurants.service";
 export declare class RestaurantsResolver {
     private readonly retaurantService;
     constructor(retaurantService: RestaurantService);
-    restaurants(): Promise<Restaurant[]>;
-    createRestaurant(createRestaurantDto: CreateRestaurantDto): Promise<boolean>;
-    updateRetaurant(updateRetaurantDto: UpdateRestarantDto): Promise<boolean>;
+    createRestaurant(authUser: User, createRestaurantInput: CreateRestaurantInput): Promise<CreateRestaurantOutput>;
 }

@@ -9,6 +9,7 @@ import { UsersService } from "./users.service";
 import { UserProfileInput, UserProfileOutput } from "./dtos/user-profile.dto";
 import { EditProfileInput, EditProfileOutput } from "./dtos/edit-profile.dto";
 import { VerifyEmailInput, VerifyEmailOutput } from "./dtos/verify-email.dto";
+import { Role } from "src/auth/role.decorator";
 
 @Resolver(of => User)
 export class UsersResolver{
@@ -16,66 +17,35 @@ export class UsersResolver{
         private readonly usersService : UsersService
     ) {}
 
-    @Query(returns => Boolean)
-    hi() {                
-        return true;
-    }
-
     @Mutation(returns => CreateAccountOutput)
-    async createAccount(@Args("input") createAccountInput:CreateAccountInput): Promise<CreateAccountOutput>{
-        try{
-            return this.usersService.createAccount(createAccountInput);            
-        }
-        catch(e) {           
-            return{
-                error:e,
-                ok:false
-            };
-        }
+    async createAccount(
+        @Args("input") createAccountInput:CreateAccountInput,
+        ): Promise<CreateAccountOutput>{    
+            return this.usersService.createAccount(createAccountInput);                   
     }
 
     @Mutation(returns => LoginOutput)
     async login(@Args('input') loginInput:LoginInput):Promise<LoginOutput> {
-        try{
-           return this.usersService.login(loginInput)           
-        }catch(error){
-            return{
-                ok:false,
-                error,
-            };
-        }
+        return this.usersService.login(loginInput); 
     }
     
     @Query(returns => User)
+    @Role(['Any'])
     @UseGuards(AuthGuard)
     me(@AuthUser() authUser:User){
         return authUser;
     }
 
+    @Role(['Any'])
     @UseGuards(AuthGuard)
     @Query(returns => UserProfileOutput)
     async userProfile(@Args() userProfileInput:UserProfileInput,): Promise<UserProfileOutput> {
-        try
-        {
-            const user = await this.usersService.findById(userProfileInput.userId);
-            if(!user)
-            {
-                throw Error();
-            }
-            return{
-                ok:true,
-            };
-        }
-        catch(e){
-            return{
-                error : "User NOt Found",
-                ok:false,
-            }
-        }        
+        return this.usersService.findById(userProfileInput.userId);
     }
 
-    @UseGuards(AuthGuard)
+   
     @Mutation(returns => EditProfileOutput)
+    @Role(['Any'])
     //@AuthUser은 현재 로그인한 사용자의 정보를 준다.
     async editProfile(@AuthUser() authUser:User, @Args('input') editProfileInput: EditProfileInput)
     : Promise<EditProfileOutput>
